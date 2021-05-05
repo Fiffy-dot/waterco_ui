@@ -1,2 +1,3 @@
 export const CHECK_AUTH = "CHECK_AUTH";
+export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 

@@ -1,7 +1,11 @@
-import { CHECK_AUTH } from "./types";
+import 
+{ CHECK_AUTH, 
+  UPDATE_CURRENT_USER,
+} from "./types";
 
 export const InitialState = {
   checkAuth: false,
+  currentUser: [],
 };
 
 export function Reducer(state, action) {
@@ -11,6 +15,11 @@ export function Reducer(state, action) {
         ...state,
         checkAuth: action.payload,
       };
+    case UPDATE_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
+      }
     default:
       return state;
   }

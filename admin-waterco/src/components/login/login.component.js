@@ -1,49 +1,82 @@
-import React, { useState } from "react";
-import Input from "../input/Input.component";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import Context from "../../Context/Context";
+import CustomButton from "../CustomButton/CustomButton";
+import lofin_bg from "../../assets/login-bg.jpg";
+import { LoginFunction } from "../Utils/AxiosFunctions";
+import { CustomSuccessMessage, CustomErrorMessage } from "../Utils/CustomToastMessage";
+import { CHECK_AUTH, UPDATE_CURRENT_USER } from "../../reducers/types";
 import "./login.styles.scss";
 
 
 
-const Login = () => {
+function Login() {
+    const history = useHistory();
+    const [email_address, setEmail] = useState("");
+    const [user_password, setPassword] = useState("");
+    const [isSubmiting, setSubmiting] = useState(false);
+    const { dispatch } = useContext(Context);
 
-    const [inputFields, setFields] = useState({
-        email_address: "",
-        user_password: ""
-    })
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFields({[name]: value });
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        setSubmiting(true);
+        const data = { email_address, user_password }
+        LoginFunction(data).then((res) => {
+            if (res.status === 200){
+                localStorage.setItem("token", res.data.token);
+                dispatch({ type: CHECK_AUTH, payload: true});
+                dispatch({ type: UPDATE_CURRENT_USER, payload: res.data.user});
+                console.log(res.data.user);
+                history.push("/dashboard");
+            }
+        }).catch(err => {
+            console.log(err);
+            CustomErrorMessage({ message: err.response.data.message});
+            setSubmiting(false);
+        })
     }
 
 
     return(
         <div className="login">
-            <div className="login-aside"></div>
+            <div className="login-aside">
+                <img src={lofin_bg} alt="bg" className="login-aside__img"/>
+            </div>
             <form className="login-form">
                 <h2 className="login-form__heading">Login</h2>
                 <div className="login-form__input-box">
-                    <Input 
+                    <input 
+                    className="form-input"
                     id="email_address"
-                    name="email_address"
-                    label="email address"
+                    placeholder="Email Address"
                     type="email"
-                    value={inputFields.email_address}
-                    handleChange={handleChange}
+                    value={email_address}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     />
                 </div>
                 <div className="login-form__input-box">
-                    <Input 
-                    id={"user_password"}
-                    name={"user_password"}
-                    label={"password"}
-                    type={"password"}
-                    value={inputFields.user_password}
-                    handleChange={handleChange}
+                    <input 
+                    className="form-input"
+                    id="user_password"
+                    placeholder="Password"
+                    type="password"
+                    value={user_password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     />
                 </div>
+                <div> <span onClick={() => history.push("/register")}>
+                        Register ? 
+                    </span>
+                </div>
+                <CustomButton 
+                    isSubmiting={isSubmiting}
+                    type="submit"
+                    handleSubmit={handleFormSubmit}
+                    onClick={(e) => handleFormSubmit(e)}
+                    > Login
+                </CustomButton>
             </form>
         </div>
     )

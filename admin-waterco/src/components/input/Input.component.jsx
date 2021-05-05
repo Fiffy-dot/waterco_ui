@@ -2,7 +2,7 @@ import React from "react";
 import "./Input.styles.scss";
 
 const Input = ({label, value, handleChange, id, name, type, ...otherProps}) => {
-    console.log(type);
+    console.log("value", value);
     return(
         <input 
             className="form-input"
