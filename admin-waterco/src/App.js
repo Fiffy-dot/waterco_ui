@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer, useEffect, useState } from "react";
+import Context from "./Context/Context";
+import jwt_decode from "jwt-decode";
+import Routing from "./Routing";
+import { Reducer, InitialState } from "./reducers/Reducer";
+import { CHECK_AUTH, UPDATE_CURRENT_USER } from "./reducers/types";
+import './App.scss';
 
 function App() {
+  const [state, dispatch] = useReducer(Reducer, InitialState);
+  const [shouldMount, mountComponent] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")){
+      let decoded = jwt_decode(localStorage.getItem("token"));
+      console.log(decoded);
+      if (decoded){
+        dispatch({ type: CHECK_AUTH, payload: true});
+        dispatch({ type: UPDATE_CURRENT_USER, payload: decoded});
+      }
+    }
+    mountComponent(true);
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider value={{ state, dispatch }}>
+       { shouldMount && <Routing /> }
+    </Context.Provider>
   );
 }
 

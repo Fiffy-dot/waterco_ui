@@ -1,0 +1,33 @@
+@import "../../sass/animation";
+@import "../../sass/mixins";
+
+.form-input{
+    width: 100%;
+    height: 4rem;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 2.5rem;
+    border: 1px solid transparent;
+    border-bottom: 3px solid var(--color-blue-dark-2);
+    padding: .2rem;
+    font-size: 2rem;
+    border-radius: 5px;
+    &:focus{
+        outline: none;
+        box-shadow: 0 1rem 2rem rgba(var(--color-black), .1);
+        border-bottom: 3px solid var(--color-orange-dark);
+
+        &:invalid{
+            border-bottom: 3px solid var(--color-red-dark);
+        }
+    }
+    
+    &:valid {
+        border-bottom: 3px solid var(--color-green-dark) !important;
+    }
+
+    &::-webkit-input-placeholder{
+        color: var(--color-grey-dark-2);
+        margin-left: 1rem;
+    }
+}
