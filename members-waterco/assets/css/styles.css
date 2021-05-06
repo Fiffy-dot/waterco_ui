@@ -4,8 +4,9 @@
 	margin: 0;
 }
 .wrapper{
-	background: url(https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500) no-repeat;
-	background-size: cover;
+	
+    background: url(https://images.pexels.com/photos/2764720/pexels-photo-2764720.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500) no-repeat;
+    background-size: cover;
 	height: 100vh;
 }
 .wrapper .center{
