@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import Context from "../../Context/Context";
+import { useHistory } from "react-router-dom";
 import lofin_bg from "../../assets/login-bg.jpg";
 import CustomButton from "../CustomButton/CustomButton";
 import { RegisterFunction } from "../Utils/AxiosFunctions";
+import { CustomSuccessMessage } from "../Utils/CustomToastMessage";
+import { CHECK_AUTH, UPDATE_CURRENT_USER } from "../../reducers/types";
 
 import "./Registration.scss";
 
 
 
 const Register = () => {
-
+    const history = useHistory();
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
     const [email_address, setEmail] = useState("");
@@ -18,6 +22,7 @@ const Register = () => {
     const [user_country, setUserCountry] = useState("");
     const [isSubmiting, setSubmiting] = useState(false);
     const [errors, setErrors] = useState({})
+    const { dispatch } = useContext(Context);
 
 
     const validate = () => {
@@ -70,7 +75,7 @@ const Register = () => {
     
         if (typeof(user_password) !== "undefined" && typeof(user_confirm_password) !== "undefined") {
             
-          if (user_password != user_confirm_password) {
+          if (user_password !== user_confirm_password) {
             isValid = false;
             user_errors["password"] = "Passwords don't match.";
           }
@@ -94,6 +99,11 @@ const Register = () => {
         if (validate()){
             RegisterFunction(data).then(res => {
                 setSubmiting(false);
+                CustomSuccessMessage({ message: res.data.message});
+                localStorage.setItem("token", res.data.token);
+                dispatch({ type: CHECK_AUTH, payload: true});
+                dispatch({ type: UPDATE_CURRENT_USER, payload: res.data.user});
+                history.push("/bill")
                 //send the person to the dahsboard
             })
             .catch( err => {

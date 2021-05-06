@@ -65,3 +65,35 @@ body {
     min-height: 100vh;
 };
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover{
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: white;
+}
+.gotop-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.gotop {
+    margin: 0 auto;
+    font-size: 1.6rem;
+    background-color: transparent;
+    border: 2px solid black;
+    color: #000;
+}
+
+.gotop a {
+    color: black;
+}
+
+.gotop a:hover {
+    color: white;
+}

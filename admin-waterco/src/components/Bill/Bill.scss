@@ -1,0 +1,26 @@
+
+
+.content-page {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100vw;
+    overflow-x: scroll;
+}
+
+.page-infor {
+    // flex-grow: .85;
+    flex-basis: 80%;
+    justify-self: center;
+    align-self: center;
+    font-size: 1.6rem;
+}
+
+.model-close{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 3rem;
+}

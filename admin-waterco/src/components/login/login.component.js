@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Context from "../../Context/Context";
 import CustomButton from "../CustomButton/CustomButton";
 import lofin_bg from "../../assets/login-bg.jpg";
 import { LoginFunction } from "../Utils/AxiosFunctions";
-import { CustomSuccessMessage, CustomErrorMessage } from "../Utils/CustomToastMessage";
+import { CustomErrorMessage } from "../Utils/CustomToastMessage";
 import { CHECK_AUTH, UPDATE_CURRENT_USER } from "../../reducers/types";
 import "./login.styles.scss";
 
@@ -26,8 +26,7 @@ function Login() {
                 localStorage.setItem("token", res.data.token);
                 dispatch({ type: CHECK_AUTH, payload: true});
                 dispatch({ type: UPDATE_CURRENT_USER, payload: res.data.user});
-                console.log(res.data.user);
-                history.push("/dashboard");
+                history.push("/bill");
             }
         }).catch(err => {
             console.log(err);
@@ -66,7 +65,7 @@ function Login() {
                     required
                     />
                 </div>
-                <div> <span onClick={() => history.push("/register")}>
+                <div> <span className="register" onClick={() => history.push("/register")}>
                         Register ? 
                     </span>
                 </div>

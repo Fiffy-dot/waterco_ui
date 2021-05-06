@@ -19,7 +19,7 @@ export async function GetAllUser(){
 }
 
 export async function DeleteUser(email){
-    const url = BASE_URL + `/users/${email}`;
+    const url = BASE_URL + "/users/" + email;
     return DeleteRequest(url);
 }
 

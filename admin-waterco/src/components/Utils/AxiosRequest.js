@@ -53,6 +53,7 @@ export async function PutRequest(url, data) {
   }
 
   export async function DeleteRequest(url) {
+    console.log("my url", url)
     try {
       console.log("DELETE URL: " + url);
       const response = axios.delete({
